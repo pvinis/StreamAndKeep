@@ -14,6 +14,8 @@
 		AF7D26751D7C3E270027CEC5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF7D26731D7C3E270027CEC5 /* LaunchScreen.storyboard */; };
 		AF7D26801D7C3E270027CEC5 /* StreamAndKeepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7D267F1D7C3E270027CEC5 /* StreamAndKeepTests.swift */; };
 		AF7D268B1D7C3E270027CEC5 /* StreamAndKeepUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7D268A1D7C3E270027CEC5 /* StreamAndKeepUITests.swift */; };
+		AF7D269A1D7C70710027CEC5 /* lf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF7D26981D7C70710027CEC5 /* lf.framework */; };
+		AF7D269B1D7C70710027CEC5 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF7D26991D7C70710027CEC5 /* XCGLogger.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		AF7D26861D7C3E270027CEC5 /* StreamAndKeepUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StreamAndKeepUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF7D268A1D7C3E270027CEC5 /* StreamAndKeepUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamAndKeepUITests.swift; sourceTree = "<group>"; };
 		AF7D268C1D7C3E270027CEC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AF7D26981D7C70710027CEC5 /* lf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lf.framework; path = Carthage/Build/iOS/lf.framework; sourceTree = "<group>"; };
+		AF7D26991D7C70710027CEC5 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF7D269A1D7C70710027CEC5 /* lf.framework in Frameworks */,
+				AF7D269B1D7C70710027CEC5 /* XCGLogger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +86,7 @@
 				AF7D26691D7C3E270027CEC5 /* StreamAndKeep */,
 				AF7D267E1D7C3E270027CEC5 /* StreamAndKeepTests */,
 				AF7D26891D7C3E270027CEC5 /* StreamAndKeepUITests */,
+				AF7D269D1D7C70E10027CEC5 /* Frameworks */,
 				AF7D26681D7C3E270027CEC5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -125,6 +132,15 @@
 			path = StreamAndKeepUITests;
 			sourceTree = "<group>";
 		};
+		AF7D269D1D7C70E10027CEC5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AF7D26981D7C70710027CEC5 /* lf.framework */,
+				AF7D26991D7C70710027CEC5 /* XCGLogger.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +151,7 @@
 				AF7D26631D7C3E270027CEC5 /* Sources */,
 				AF7D26641D7C3E270027CEC5 /* Frameworks */,
 				AF7D26651D7C3E270027CEC5 /* Resources */,
+				AF7D269C1D7C707E0027CEC5 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -253,6 +270,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AF7D269C1D7C707E0027CEC5 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/lf.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/XCGLogger.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AF7D26631D7C3E270027CEC5 /* Sources */ = {
@@ -404,6 +439,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = StreamAndKeep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = is.pvin.StreamAndKeep;
@@ -415,6 +454,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = StreamAndKeep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = is.pvin.StreamAndKeep;
