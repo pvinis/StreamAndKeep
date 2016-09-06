@@ -16,6 +16,9 @@
 		AF7D268B1D7C3E270027CEC5 /* StreamAndKeepUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7D268A1D7C3E270027CEC5 /* StreamAndKeepUITests.swift */; };
 		AF7D269A1D7C70710027CEC5 /* lf.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF7D26981D7C70710027CEC5 /* lf.framework */; };
 		AF7D269B1D7C70710027CEC5 /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF7D26991D7C70710027CEC5 /* XCGLogger.framework */; };
+		AFC9789D1D7C7DDA004666A4 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9789C1D7C7DDA004666A4 /* UIViewExtension.swift */; };
+		AFC9789E1D7C7DDA004666A4 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9789C1D7C7DDA004666A4 /* UIViewExtension.swift */; };
+		AFC9789F1D7C7DDA004666A4 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9789C1D7C7DDA004666A4 /* UIViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,7 @@
 		AF7D268C1D7C3E270027CEC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF7D26981D7C70710027CEC5 /* lf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = lf.framework; path = Carthage/Build/iOS/lf.framework; sourceTree = "<group>"; };
 		AF7D26991D7C70710027CEC5 /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
+		AFC9789C1D7C7DDA004666A4 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +114,7 @@
 				AF7D26711D7C3E270027CEC5 /* Assets.xcassets */,
 				AF7D26731D7C3E270027CEC5 /* LaunchScreen.storyboard */,
 				AF7D26761D7C3E270027CEC5 /* Info.plist */,
+				AFC9789C1D7C7DDA004666A4 /* UIViewExtension.swift */,
 			);
 			path = StreamAndKeep;
 			sourceTree = "<group>";
@@ -295,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF7D266D1D7C3E270027CEC5 /* ViewController.swift in Sources */,
+				AFC9789D1D7C7DDA004666A4 /* UIViewExtension.swift in Sources */,
 				AF7D266B1D7C3E270027CEC5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFC9789E1D7C7DDA004666A4 /* UIViewExtension.swift in Sources */,
 				AF7D26801D7C3E270027CEC5 /* StreamAndKeepTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,6 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFC9789F1D7C7DDA004666A4 /* UIViewExtension.swift in Sources */,
 				AF7D268B1D7C3E270027CEC5 /* StreamAndKeepUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -530,6 +538,7 @@
 				AF7D26911D7C3E270027CEC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AF7D26921D7C3E270027CEC5 /* Build configuration list for PBXNativeTarget "StreamAndKeepTests" */ = {
 			isa = XCConfigurationList;
@@ -538,6 +547,7 @@
 				AF7D26941D7C3E270027CEC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AF7D26951D7C3E270027CEC5 /* Build configuration list for PBXNativeTarget "StreamAndKeepUITests" */ = {
 			isa = XCConfigurationList;
@@ -546,6 +556,7 @@
 				AF7D26971D7C3E270027CEC5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

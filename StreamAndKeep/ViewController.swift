@@ -55,6 +55,7 @@ class ViewController: UIViewController {
 		recordingLabel.hidden = true
 
 		cameraView.addSubview(lfView)
+		lfView.bindFrameToSuperviewBounds()
 	}
 
 	@IBAction private func startButtonTapped(sender: UIButton) {
