@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Photos
 
 import lf
 
@@ -23,34 +24,54 @@ class ViewController: UIViewController {
 
 	@IBOutlet private var startButton: UIButton!
 	@IBOutlet private var stopButton: UIButton!
+	@IBOutlet private var recordSwitch: UISwitch!
 
 	@IBOutlet private var streamingLabel: UILabel!
 	@IBOutlet private var recordingLabel: UILabel!
 
 	private let rtmpConnection: RTMPConnection = RTMPConnection()
-	private var rtmpStream: RTMPStream!
-	private let streamInfo: StreamInfo = StreamInfo(uri: "rtmp://ip/live", key: "streamName")
+	private var rtmpRecStream: RTMPStream!
+	private let streamInfo: StreamInfo = StreamInfo(uri: "rtmp://130.211.53.17:1935/live", key: "myStream")
+
+	private var isRecording = true
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		rtmpStream = RTMPStream(rtmpConnection: rtmpConnection)
-		rtmpStream.syncOrientation = true
+		rtmpRecStream = RTMPStream(rtmpConnection: rtmpConnection)
+		rtmpRecStream.syncOrientation = true
+		rtmpRecStream.recorderDelegate = RecorderDelegate()
 
-		rtmpStream.attachAudio(AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeAudio))
-		rtmpStream.attachCamera(DeviceUtil.deviceWithPosition(.Front))
-
-		rtmpStream.captureSettings = [
+		rtmpRecStream.attachAudio(AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeAudio))
+		rtmpRecStream.attachCamera(DeviceUtil.deviceWithPosition(.Front))
+		rtmpRecStream.captureSettings = [
 			"sessionPreset": AVCaptureSessionPreset1280x720,
 			"continuousAutofocus": true,
 			"continuousExposure": true,
 		]
-		rtmpStream.videoSettings = [
+		rtmpRecStream.videoSettings = [
 			"width": 1280,
 			"height": 720,
 		]
+		rtmpRecStream.audioSettings = [
+			"muted": false, // mute audio
+			"bitrate": 32 * 1024,
+		]
+		rtmpRecStream.recorderSettings = [
+			AVMediaTypeAudio: [
+				AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+				AVSampleRateKey: 0,
+				AVNumberOfChannelsKey: 0,
+			],
+			AVMediaTypeVideo: [
+				AVVideoCodecKey: AVVideoCodecH264,
+				AVVideoHeightKey: 0,
+				AVVideoWidthKey: 0,
+			],
+		]
 
-		lfView.attachStream(rtmpStream)
+		lfView.attachStream(rtmpRecStream)
+
 		streamingLabel.hidden = true
 		recordingLabel.hidden = true
 
@@ -61,11 +82,15 @@ class ViewController: UIViewController {
 	@IBAction private func startButtonTapped(sender: UIButton) {
 		UIApplication.sharedApplication().idleTimerDisabled = true
 
+		isRecording = recordSwitch.on
+
 		rtmpConnection.addEventListener(Event.RTMP_STATUS, selector:#selector(rtmpStatusHandler), observer: self)
 		rtmpConnection.connect(streamInfo.uri)
 
 		streamingLabel.hidden = false
-		recordingLabel.hidden = false
+		if isRecording {
+			recordingLabel.hidden = false
+		}
 	}
 
 	@IBAction private func stopButtonTapped(sender: UIButton) {
@@ -76,7 +101,6 @@ class ViewController: UIViewController {
 
 		streamingLabel.hidden = true
 		recordingLabel.hidden = true
-
 	}
 
 	@objc private func rtmpStatusHandler(notification: NSNotification) {
@@ -88,9 +112,28 @@ class ViewController: UIViewController {
 
 		switch code {
 			case RTMPConnection.Code.ConnectSuccess.rawValue:
-				rtmpStream!.publish(streamInfo.key)
+				rtmpRecStream!.publish(streamInfo.key, type: (isRecording ? .LiveAndRecord : .Live))
 			default:
 				break
 		}
+	}
+}
+
+class RecorderDelegate: DefaultAVMixerRecorderDelegate {
+	override func didFinishWriting(recorder: AVMixerRecorder) {
+		super.didFinishWriting(recorder)
+
+		let moviesDirectoryContents = try! NSFileManager.defaultManager().contentsOfDirectoryAtURL(moviesDirectory, includingPropertiesForKeys: nil, options: [])
+		guard let lastMovie = moviesDirectoryContents.last else { return }
+
+		PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+			PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(lastMovie)
+			}, completionHandler: { (success, error) in
+				if success {
+					try! NSFileManager.defaultManager().removeItemAtURL(lastMovie)
+				} else {
+					print(error)
+				}
+		})
 	}
 }
